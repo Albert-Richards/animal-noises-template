@@ -1,0 +1,6 @@
+{% if history %}
+            <h2>Previous animal noise things</h2>
+            <ul>
+            {% for entry in history %}
+                <li> {{ entry.name }} </li>
+            {% endfor %}
