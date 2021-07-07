@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 import random
 
 app = Flask(__name__)
@@ -6,7 +6,7 @@ app = Flask(__name__)
 # animal generator route here
 @app.route('/get_animal', methods=['GET'])
 def get_animal():
-    return = random.choice(['cow', 'pig', 'horse'])
+    return random.choice(['cow', 'pig', 'horse'])
 
 
 # animal noise generator route here
