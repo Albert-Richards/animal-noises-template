@@ -1,14 +1,26 @@
 from flask import Flask, render_template
 import requests
+from flask_sqlalchemy import SQLAlchemy
+from os import getenv
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = getenv('DATABASE_URI')
+db = SQLAlchemy(app)
 
-# home route here
+class Animals(db.Model):
+	entry_no = db.Column(db.Integer, primary_key=True)
+	animal_entry = db.Column(db.String(50), nullable=False)
+    def __repr__(self):
+		return ''.join([str(self.animal_entry)])
+
 @app.route('/')
 def home():
     animal = requests.get('http://animal_api:5000/get_animal')
     noise = requests.post('http://animal_api:5000/get_noise', data=animal.text)
-    #history = Animals.query.order_by(Animals.id.desc()).limit(5).all()
+    response = f"The {animal.text} goes {noise.text}"
+    db.seesion.add(Animals(animal_entry=response)) 
+    db.session.commit()
+    history = Animals.query.order_by(Animals.entry_no.desc()).limit(5).all()
     return render_template('index.html', animal=animal.text, noise=noise.text)
 
 if __name__ == "__main__":

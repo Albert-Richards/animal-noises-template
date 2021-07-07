@@ -15,5 +15,7 @@ class TestAnimalApi(TestBase):
             self.assertIn(response.data.decode("utf-8"),["cow", "pig", "horse"])
     
     def test_get_noise(self):
-        response = self.client.post(url_for('get_noise'), data="cow")
-        self.assertEqual(response.data.decode("utf-8"),"moo")
+        test_cases=[("cow","moo"), ("pig","oink"), ("horse", "neigh")]
+        for case in test_cases:
+            response = self.client.post(url_for('get_noise'), data=case[0])
+            self.assertEqual(response.data.decode("utf-8"),case[1])

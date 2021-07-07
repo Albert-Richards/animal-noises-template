@@ -4,6 +4,8 @@ services:
     container_name: animal_noises_server
     image: arichards98/animal_noises_server
     build: ./server
+    environment:
+      DATABASE_URI: 'mysql+pymysql://root:r00t@35.246.118.98:3306/animal_noises'
     ports:
     - published: 5000
       target: 5000 
