@@ -7,5 +7,12 @@
         <p>
             The {{animal}} goes {{noise}}
         </p>
+        {% if history %}
+            <h2>Previous animal noise things</h2>
+            <ul>
+            {% for entry in history %}
+                <li> {{ entry.animal_entry }} </li>
+            {% endfor %}
+        {% endif %}
     </body>
 </html>
